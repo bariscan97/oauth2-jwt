@@ -73,16 +73,13 @@ func (mailer *MailWorker) SendMail(msg models.Message) error {
 }
 
 func (mailer *MailWorker) Worker() {
-	loop:
-		for {
-			for msg := range mailer.Msg {
-				if err := mailer.SendMail(msg) ; err != nil {
-					log.Info(fmt.Println(err.Error()))
-					break loop
-				}else{
-					log.Info(fmt.Println("sent successfully"))
-				}
-
+		
+	for msg := range mailer.Msg {
+		if err := mailer.SendMail(msg) ; err != nil {
+				log.Info(fmt.Println(err.Error()))
+				break
 			}
+			log.Info(fmt.Println("sent successfully"))
 		}
-}
+	
+	}
